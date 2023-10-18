@@ -24,6 +24,12 @@ To use the API make a GET request to the following endpoint, proving the URL to 
 
 ```http://localhost:8000/api/analyze?url=INSERT_YOUR_URL```
 
+#### Using the web interface
+
+The web interface is available on the same port, on the homepage (the only page):
+
+```http://localhost:8000```
+
 You can expect a JSON response such as the following, where the title, a short description, an image associated with the article, its link, a sentiment, and a word count is provided.
 
 ```
