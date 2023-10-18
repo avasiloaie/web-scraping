@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="output.css" rel="stylesheet">
+  <title>WSA Analyzer</title>
+</head>
+<script>
+  window.onload = function() {
+    const analyzeUrl = document.getElementById("analyzeUrl");
+    const resultsInfo = document.getElementById("results-info");
+    const resultsJson = document.getElementById("results-json");
+    analyzeUrl.addEventListener("submit", async e => {
+      resultsInfo.innerText = "Loading...";
+      resultsJson.innerText = "";
+      e.preventDefault();
+      const url = document.getElementById("url").value;
+      const response = await fetch("api/analyze?url=" + url);
+      if (response.status === 200) {
+        const json = await response.json();
+        resultsInfo.innerText = "";
+        resultsJson.innerHTML = JSON.stringify(json, null, 4);
+      } else {
+        resultsInfo.innerHTML = `The URL: "${url}" could not be analyzed.`;
+      }
+    });
+  }
+</script>
+<body>
+  <div class="container p-8">
+    <div class="flex justify-center p-1">
+      <h1 class="text-3xl font-bold">Web Scraper</h1>
+    </div>
+    <form class="flex justify-center p-1" action="" id="analyzeUrl">
+      <input class="border rounded-sm px-2 py-1" type="text" id="url" name="url" required size="40" placeholder="Enter your URL here" />
+    </form>
+    <div class="flex justify-center p-1">
+      <h2 class="text-3x1 font-bold">Results:</h2>
+    </div>
+    <div class="bg-slate-100 p-4 border rounded-md" style="font-family: Lucida Console;">
+      <div class="text-center" id="results-info">No URL analyzed yet.</div>
+      <pre class="whitespace-break-spaces"><code id="results-json"></code></pre>
+    </div>
+  </div>
+</body>
+</html>
